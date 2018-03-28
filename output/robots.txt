@@ -1,0 +1,4 @@
+Sitemap: https://stevendouglas.me/sitemapindex.xml
+
+User-Agent: *
+Host: stevendouglas.me

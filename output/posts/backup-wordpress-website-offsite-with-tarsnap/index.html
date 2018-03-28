@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " vocab="http://ogp.me/ns" lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Backup Wordpress website offsite with Tarsnap | dereference</title>
+<link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/dark.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
+<link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<link rel="canonical" href="https://stevendouglas.me/posts/backup-wordpress-website-offsite-with-tarsnap/">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Steven Douglas">
+<link rel="prev" href="../freebsd-replace-a-root-disk-from-bsdinstall-connected-to-a-raid-controller/" title="FreeBSD replace a root disk from bsdinstall connected to a RAID controller" type="text/html">
+<link rel="next" href="../building-packages-with-poudriere/" title="building packages with poudriere" type="text/html">
+<meta property="og:site_name" content="dereference">
+<meta property="og:title" content="Backup Wordpress website offsite with Tarsnap">
+<meta property="og:url" content="https://stevendouglas.me/posts/backup-wordpress-website-offsite-with-tarsnap/">
+<meta property="og:description" content="I use tarsnap because it sticks to the unix philosophy...it does one thing (backups) very well. Encryption is done on the client before backup every leaves, and it is as easy as using tar.
+Make sure y">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2018-03-27T22:55:24-07:00">
+</head>
+<body class="hack dark">
+
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    <div id="container">
+         
+    <header id="header"><h1 id="brand"><a href="https://stevendouglas.me/" title="dereference" rel="home">
+
+        <span id="blog-title">dereference</span>
+    </a></h1>
+
+        
+
+        
+    <nav id="menu"><ul>
+<li><a href="../../archive.html">Posts by date</a></li>
+                <li><a href="../../resume-latest-public.pdf">Resume</a></li>
+                <li><a href="../../rss.xml">RSS feed</a></li>
+                <li><a href="../../categories/">Tags</a></li>
+                <li><a href="https://twitter.com/elstevi"><img class="socialmedia" width="25px" src="../../twitter.png"></a></li>
+                <li><a href="https://www.linkedin.com/in/steven-douglas-b301a4137"><img class="socialmedia" width="30px" src="../../linkedin.png"></a></li>
+    
+    
+    </ul></nav></header><main id="content"><article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Backup Wordpress website offsite with Tarsnap</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                    Steven Douglas
+            </span></p>
+            <p class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2018-03-27T22:55:24-07:00" itemprop="datePublished" title="2018-03-27 22:55">2018-03-27 22:55</time></a></p>
+            
+        <p class="sourceline"><a href="index.md" class="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>I use <a href="https://www.tarsnap.com/">tarsnap</a> because it sticks to the unix philosophy...it does one thing (backups) very well. Encryption is done on the client before backup every leaves, and it is as easy as using tar.</p>
+<h3>Make sure you are signed up with tarsnap</h3>
+
+<p>If you haven't already, <a href=".">go get an account at tarsnap</a>. You will need one to complete this tutorial. I put about $5 in my account, and have never refilled it.
+<!-- TEASER_END -->
+</p>
+<h3>Install tarsnap</h3>
+This can be done with ports or packages, I am going to pick packages because lazy.
+<pre class="code literal-block"><span></span>root@stevendouglas:~ # pkg install -y tarsnap
+Updating FreeBSD repository catalogue...
+FreeBSD repository is up to date.
+All repositories are up to date.
+The following 1 package(s) will be affected (of 0 checked):
+
+New packages to be INSTALLED:
+        tarsnap: 1.0.37_1
+
+Number of packages to be installed: 1
+
+224 KiB to be downloaded.
+[stevendouglas.me] [1/1] Fetching tarsnap-1.0.37_1.txz: 100%  224 KiB 229.2kB/s    00:01
+Checking integrity... done (0 conflicting)
+[stevendouglas.me] [1/1] Installing tarsnap-1.0.37_1...
+[stevendouglas.me] Extracting tarsnap-1.0.37_1: 100%
+Message from tarsnap-1.0.37_1:
+================================================================================
+
+If you have never used tarsnap before, you will need to create an account
+with the tarsnap service and deposit money into the account before you
+can start using tarsnap; see
+  https://www.tarsnap.com/gettingstarted.html
+for details.
+
+Once you have a tarsnap account you will need to create a key file using
+the tarsnap-keygen utility before you start storing archives; this key
+file MUST BE KEPT IN A SAFE LOCATION since you will not be able to read
+your backups without it.
+
+================================================================================
+</pre>
+
+
+<h3>Configure the host for tarsnap use</h3>
+
+<p>Take this example command from <a href="https://www.tarsnap.com/gettingstarted.html">tarsnap's legit documentation</a>:</p>
+<pre class="code literal-block"><span></span>sudo tarsnap-keygen --keyfile /root/tarsnap.key --user me@example.com --machine mybox
+</pre>
+
+
+<p>and retrofit it to suit your needs. The <code>--user</code> flag will need to match your tarsnap account username. The machine can really be whatever you want, I generally use the <code>hostname</code>.</p>
+<p>This will register the machine it is run on with tarsnap. It will ask for your password.</p>
+<p>Take the <code>/root/tarsnap.key</code> and save it somewhere. Without this key, you will be unable to restore from your backups! Also, anyone who acquires this key will be able to restore your backups!</p>
+<p>For tarsnap keys, I generally keep two copies. I have one that gets put into my password manager, and one gets put in a safe deposit box. Seriously. They are cheap and a relatively secure place to keep things. I suggest getting a safe deposit box that is relatively accessible and geographically diverse from your home.</p>
+<h3>Write a backup script</h3>
+
+<p>This is the backup script I wrote for backing up this wordpress site:</p>
+<table class="codehilitetable"><tr>
+<td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42</pre></div></td>
+<td class="code">
+<pre class="code literal-block"><span></span><span class="ch">#!/bin/sh</span>
+<span class="nb">echo</span> <span class="s2">"Backup starting - `date`"</span>
+<span class="nv">BACKUPS_TO_KEEP</span><span class="o">=</span><span class="m">60</span>
+<span class="nv">BACKUP_NAME</span><span class="o">=</span><span class="s1">'stevendouglas.me-backup'</span>
+<span class="nv">STAGING_DIR</span><span class="o">=</span><span class="s2">"/tmp/backups/</span><span class="si">${</span><span class="nv">BACKUP_NAME</span><span class="si">}</span><span class="s2">"</span>
+<span class="nv">WORDPRESS_DIR</span><span class="o">=</span><span class="s1">'/usr/local/www/wordpress'</span>
+<span class="nv">WP_CONFIG</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">WORDPRESS_DIR</span><span class="si">}</span><span class="s2">/wp-config.php"</span>
+
+<span class="nv">MYSQL_HOST</span><span class="o">=</span><span class="sb">`</span>grep -r -i DB_HOST <span class="si">${</span><span class="nv">WP_CONFIG</span><span class="si">}</span> <span class="p">|</span> cut -d <span class="s1">' '</span> -f2 <span class="p">|</span> cut -d <span class="se">\'</span> -f2<span class="sb">`</span>
+<span class="nv">MYSQL_NAME</span><span class="o">=</span><span class="sb">`</span>grep -r -i DB_NAME <span class="si">${</span><span class="nv">WP_CONFIG</span><span class="si">}</span> <span class="p">|</span> cut -d <span class="s1">' '</span> -f2 <span class="p">|</span> cut -d <span class="se">\'</span> -f2<span class="sb">`</span>
+<span class="nv">MYSQL_PASS</span><span class="o">=</span><span class="sb">`</span>grep -r -i DB_PASSWORD <span class="si">${</span><span class="nv">WP_CONFIG</span><span class="si">}</span> <span class="p">|</span> cut -d <span class="s1">' '</span> -f2 <span class="p">|</span> cut -d <span class="se">\'</span> -f2<span class="sb">`</span>
+<span class="nv">MYSQL_USER</span><span class="o">=</span><span class="sb">`</span>grep -r -i DB_USER <span class="si">${</span><span class="nv">WP_CONFIG</span><span class="si">}</span> <span class="p">|</span> cut -d <span class="s1">' '</span> -f2 <span class="p">|</span> cut -d <span class="se">\'</span> -f2<span class="sb">`</span>
+
+mkdir -p <span class="si">${</span><span class="nv">STAGING_DIR</span><span class="si">}</span>
+<span class="nb">printf</span> <span class="s2">"Dumping database..."</span>
+mysqldump --single-transaction -u <span class="si">${</span><span class="nv">MYSQL_USER</span><span class="si">}</span> -p<span class="si">${</span><span class="nv">MYSQL_PASS</span><span class="si">}</span> -h <span class="si">${</span><span class="nv">MYSQL_HOST</span><span class="si">}</span> <span class="si">${</span><span class="nv">MYSQL_NAME</span><span class="si">}</span> &gt; <span class="si">${</span><span class="nv">STAGING_DIR</span><span class="si">}</span>/db.sql
+<span class="nb">echo</span> <span class="s2">"done"</span>
+
+<span class="nb">printf</span> <span class="s2">"Copying wordpress files..."</span>
+cp -R <span class="si">${</span><span class="nv">WORDPRESS_DIR</span><span class="si">}</span> <span class="si">${</span><span class="nv">STAGING_DIR</span><span class="si">}</span>
+<span class="nb">echo</span> <span class="s2">"done"</span>
+
+<span class="nb">printf</span> <span class="s2">"Running tarsnap..."</span>
+tarsnap -c -f <span class="s2">"</span><span class="si">${</span><span class="nv">BACKUP_NAME</span><span class="si">}</span><span class="s2">-</span><span class="k">$(</span>date +%Y-%m-%d_%H-%M-%S<span class="k">)</span><span class="s2">"</span> <span class="s2">"</span><span class="si">${</span><span class="nv">STAGING_DIR</span><span class="si">}</span><span class="s2">"</span> <span class="m">2</span>&gt; /dev/null
+<span class="nb">printf</span> <span class="s2">"</span><span class="nv">$?</span><span class="s2">."</span>
+<span class="nb">echo</span> <span class="s2">"done"</span>
+rm -rf <span class="si">${</span><span class="nv">STAGING_DIR</span><span class="si">}</span>
+
+<span class="nv">CURRENT_BACKUPS</span><span class="o">=</span><span class="sb">`</span>tarsnap --list-archives <span class="p">|</span> grep <span class="si">${</span><span class="nv">BACKUP_NAME</span><span class="si">}</span> <span class="p">|</span> wc -l <span class="p">|</span> tr -d <span class="s1">' '</span><span class="sb">`</span>
+<span class="nb">echo</span> <span class="s2">"We want to have </span><span class="si">${</span><span class="nv">BACKUPS_TO_KEEP</span><span class="si">}</span><span class="s2"> backups, and have </span><span class="si">${</span><span class="nv">CURRENT_BACKUPS</span><span class="si">}</span><span class="s2">."</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="si">${</span><span class="nv">CURRENT_BACKUPS</span><span class="si">}</span><span class="s2">"</span> -gt <span class="s2">"</span><span class="si">${</span><span class="nv">BACKUPS_TO_KEEP</span><span class="si">}</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> <span class="s2">"trimming old backups"</span>
+        <span class="nv">BACKUPS_TO_TRIM</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">CURRENT_BACKUPS</span><span class="si">}</span>-<span class="si">${</span><span class="nv">BACKUPS_TO_KEEP</span><span class="si">}</span> <span class="p">|</span> bc<span class="sb">`</span>
+        <span class="nv">DELETE_BACKUPS</span><span class="o">=</span><span class="sb">`</span>tarsnap --list-archives <span class="p">|</span> grep <span class="si">${</span><span class="nv">BACKUP_NAME</span><span class="si">}</span> <span class="p">|</span> sort -r <span class="p">|</span> tail -n <span class="si">${</span><span class="nv">BACKUPS_TO_TRIM</span><span class="si">}</span><span class="sb">`</span>
+
+        <span class="k">for</span> BACKUP in <span class="nv">$DELETE_BACKUPS</span><span class="p">;</span> <span class="k">do</span>
+                <span class="nb">printf</span> <span class="s2">"Deleting </span><span class="si">${</span><span class="nv">BACKUP</span><span class="si">}</span><span class="s2">..."</span>
+                tarsnap -d -f <span class="si">${</span><span class="nv">BACKUP</span><span class="si">}</span> <span class="m">2</span>&gt; /dev/null
+                <span class="nb">echo</span> <span class="s2">"DONE"</span>
+        <span class="k">done</span>
+<span class="k">fi</span>
+<span class="nb">echo</span> <span class="s2">"Backup finishing - `date`"</span>
+</pre>
+</td>
+</tr></table>
+<h3>Running at an interval</h3>
+
+<p>This line in cron should do it:</p>
+<pre class="code literal-block"><span></span>0 2 * * * /root/backup.sh &gt; /var/log/backup 2&gt;&amp;1
+</pre>
+
+
+<p>You are now backing up daily at 2AM.</p>
+<h3>Restoring</h3>
+
+<p>First find the backup you want to restore:</p>
+<pre class="code literal-block"><span></span>root@stevendouglas:~ # tarsnap --list-archives | sort
+stevendouglas.me-backup-2017-06-25_19-02-24
+stevendouglas.me-backup-2017-06-25_19-08-35
+stevendouglas.me-backup-2017-06-25_19-16-08
+</pre>
+
+
+<p>And use this command to restore:</p>
+<pre class="code literal-block"><span></span>tarsnap -x -f stevendouglas.me-backup-2017-06-25_19-16-08
+</pre>
+
+
+<p>And our files are restored:</p>
+<pre class="code literal-block"><span></span>root@stevendouglas:~ # ls -lh tmp/backups/stevendouglas.me-backup/                                                                                                                                    
+total 234
+-rw-r--r--  1 root  wheel   678K Jun 25 19:16 db.sql
+drwxr-xr-x  6 root  wheel    23B Jun 25 19:16 wordpress
+</pre>
+
+
+<h3>Conclusion</h3>
+
+<p>You did backup your key...right? Tarsnap is a wonderfully simple service that does exactly what it says on the box. </p>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul class="pager hidden-print">
+<li class="previous">
+                <a href="../freebsd-replace-a-root-disk-from-bsdinstall-connected-to-a-raid-controller/" rel="prev" title="FreeBSD replace a root disk from bsdinstall connected to a RAID controller">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../building-packages-with-poudriere/" rel="next" title="building packages with poudriere">Next post</a>
+            </li>
+        </ul></nav></aside></article></main><footer id="footer"><p>©2018 Steven Douglas</p>
+            
+        </footer>
+</div>
+    
+    
+
+    
+    
+    
+</body>
+</html>
