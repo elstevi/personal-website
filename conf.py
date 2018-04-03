@@ -139,8 +139,9 @@ NAVIGATION_LINKS = {
         ("/resume-latest-public.pdf", "Resume"),
         ("/rss.xml", "RSS feed"),
         ("/categories/", "Tags"),
-        ("https://twitter.com/elstevi", "<img class='socialmedia' width='25px' src='/twitter.png'/>"),
+        ("https://github.com/elstevi/", "<img class='socialmedia' width='25px' src='/github.png'/>"),
         ("https://www.linkedin.com/in/steven-douglas-b301a4137", "<img class='socialmedia' width='30px' src='/linkedin.png'/>"),
+        ("https://twitter.com/elstevi", "<img class='socialmedia' width='25px' src='/twitter.png'/>"),
     ),
 }
 

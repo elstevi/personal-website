@@ -9,7 +9,7 @@
 .. type: text
 -->
 
-I use <a href='https://www.tarsnap.com/'>tarsnap</a> because it sticks to the unix philosophy...it does one thing (backups) very well. Encryption is done on the client before backup every leaves, and it is as easy as using tar.
+I use <a href='https://www.tarsnap.com/'>tarsnap</a> because it sticks to the unix philosophy...it does one thing (backups) very well. Encryption is done on the client before the backup ever leaves, and it is as easy as using tar.
 
 <h2>Make sure you are signed up with tarsnap</h2>
 If you haven't already, <a href=''>go get an account at tarsnap</a>. You will need one to complete this tutorial. I put about $5 in my account, and have never refilled it.
