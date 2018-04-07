@@ -21,8 +21,8 @@
 	}
 .dark code {
 	border: 1px solid white;
-	border-radius: 5px;
-	padding: 5px;
+	border-radius: 2px;
+	padding: 1px;
 	background-color: black;
 	color: #33FF33;
 	}

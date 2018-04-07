@@ -7,46 +7,54 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
   <loc>https://stevendouglas.me/categories/bridge.xml</loc>
-  <lastmod>2018-04-03T01:39:00Z</lastmod>
+  <lastmod>2018-04-07T19:27:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://stevendouglas.me/categories/drac.xml</loc>
+  <lastmod>2018-04-07T19:27:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/freebsd.xml</loc>
-  <lastmod>2018-04-03T01:39:00Z</lastmod>
+  <lastmod>2018-04-07T19:27:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/hax.xml</loc>
-  <lastmod>2018-04-03T01:39:00Z</lastmod>
+  <lastmod>2018-04-07T19:27:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/jails.xml</loc>
-  <lastmod>2018-04-03T01:39:00Z</lastmod>
+  <lastmod>2018-04-07T19:27:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/linux.xml</loc>
-  <lastmod>2018-04-03T01:39:00Z</lastmod>
+  <lastmod>2018-04-07T19:27:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/pf.xml</loc>
-  <lastmod>2018-04-03T01:39:00Z</lastmod>
+  <lastmod>2018-04-07T19:27:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/poudriere.xml</loc>
-  <lastmod>2018-04-03T01:39:00Z</lastmod>
+  <lastmod>2018-04-07T19:27:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/ssh.xml</loc>
-  <lastmod>2018-04-03T01:39:00Z</lastmod>
+  <lastmod>2018-04-07T19:27:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://stevendouglas.me/categories/wine.xml</loc>
+  <lastmod>2018-04-07T19:27:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/galleries/rss.xml</loc>
-  <lastmod>2018-04-03T01:38:00Z</lastmod>
+  <lastmod>2018-04-07T18:44:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/rss.xml</loc>
-  <lastmod>2018-04-03T01:39:00Z</lastmod>
+  <lastmod>2018-04-07T19:27:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/sitemap.xml</loc>
-  <lastmod>2018-04-03T03:31:00Z</lastmod>
+  <lastmod>2018-04-07T19:27:00Z</lastmod>
  </sitemap>
 </sitemapindex>
