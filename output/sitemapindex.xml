@@ -7,54 +7,58 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
   <loc>https://stevendouglas.me/categories/bridge.xml</loc>
-  <lastmod>2019-03-21T04:15:00Z</lastmod>
+  <lastmod>2019-03-22T05:22:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/cat_posts.xml</loc>
-  <lastmod>2019-03-21T04:15:00Z</lastmod>
+  <lastmod>2019-03-22T05:40:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/drac.xml</loc>
-  <lastmod>2019-03-21T04:15:00Z</lastmod>
+  <lastmod>2019-03-22T05:22:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/freebsd.xml</loc>
-  <lastmod>2019-03-21T04:15:00Z</lastmod>
+  <lastmod>2019-03-22T05:22:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/hax.xml</loc>
-  <lastmod>2019-03-21T04:15:00Z</lastmod>
+  <lastmod>2019-03-22T05:22:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/jails.xml</loc>
-  <lastmod>2019-03-21T04:15:00Z</lastmod>
+  <lastmod>2019-03-22T05:22:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/linux.xml</loc>
-  <lastmod>2019-03-21T04:15:00Z</lastmod>
+  <lastmod>2019-03-22T05:22:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/pf.xml</loc>
-  <lastmod>2019-03-21T04:15:00Z</lastmod>
+  <lastmod>2019-03-22T05:22:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/poudriere.xml</loc>
-  <lastmod>2019-03-21T04:15:00Z</lastmod>
+  <lastmod>2019-03-22T05:22:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/ssh.xml</loc>
-  <lastmod>2019-03-21T04:15:00Z</lastmod>
+  <lastmod>2019-03-22T05:22:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://stevendouglas.me/categories/vnet-vimage-iocage-freebsd-120-dhcp.xml</loc>
+  <lastmod>2019-03-22T05:40:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/wine.xml</loc>
-  <lastmod>2019-03-21T04:15:00Z</lastmod>
+  <lastmod>2019-03-22T05:22:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/rss.xml</loc>
-  <lastmod>2019-03-21T04:15:00Z</lastmod>
+  <lastmod>2019-03-22T05:40:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/sitemap.xml</loc>
-  <lastmod>2019-03-21T04:40:00Z</lastmod>
+  <lastmod>2019-03-22T05:40:00Z</lastmod>
  </sitemap>
 </sitemapindex>
