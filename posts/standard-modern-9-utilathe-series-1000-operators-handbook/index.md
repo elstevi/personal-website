@@ -2,8 +2,8 @@
 .. title: Standard Modern 9" Utilathe (Series 1000) Operator's Handbook
 .. slug: standard-modern-9-utilathe-series-1000-operators-handbook
 .. date: 2025-10-26 11:49:32 UTC-07:00
-.. tags: 
-.. category: 
+.. tags: Utilathe 9" Series 1000, B-65668, lathe
+.. category: lathe
 .. link: 
 .. description: 
 .. type: text

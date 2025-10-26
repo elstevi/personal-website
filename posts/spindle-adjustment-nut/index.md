@@ -1,9 +1,9 @@
-<!--
+
 .. title: Spindle Adjustment Nut
 .. slug: spindle-adjustment-nut
 .. date: 2025-10-25 22:15:25 UTC-07:00
 .. tags: Utilathe 9" Series 1000, B-65668, lathe
-.. category: machining, lathe
+.. category: lathe
 .. link: 
 .. description: 
 .. type: text
@@ -42,7 +42,7 @@ Here are models and drawings for the Spindle Adjustment Nut (part B-65668) for t
     0.1,
     1000
   );
-  camera.position.set(6, 6, 6);
+  camera.position.set(6, 6, 3);
 
   // Renderer
   const renderer = new THREE.WebGLRenderer({ antialias: true });
