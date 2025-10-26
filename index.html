@@ -9,7 +9,7 @@
       gtag('config', 'UA-136803117-1');
     </script><link rel="icon" type="image/png" href="favicon.png">
 <meta charset="utf-8">
-<meta name="description" content="bsd ramblings">
+<meta name="description" content="musings">
 <meta name="theme-color" content="#000">
 <meta name="viewport" content="width=device-width">
 <title>dereference</title>
@@ -23,14 +23,14 @@
 <meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
 <link rel="canonical" href="https://stevendouglas.me/">
-<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/vnet-iocage-freebsd-12/" type="text/html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/spindle-adjustment-nut/" type="text/html">
 </head>
 <body class="hack dark">
 
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
     <div id="container">
          
-    <header id="header"><h1 id="brand"><a href="https://stevendouglas.me/" title="dereference" rel="home">
+    <header id="header"><h1 id="brand"><a href="." title="dereference" rel="home">
 
         <span id="blog-title">dereference</span>
     </a></h1>
@@ -52,7 +52,23 @@
     
     
     </ul></nav></header><main id="content"><div class="postindex">
-    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/vnet-iocage-freebsd-12/" class="u-url">Configuring iocage for vnet and dhcp on FreeBSD 12 </a></h1>
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/spindle-adjustment-nut/" class="u-url">Spindle Adjustment Nut</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                Steven Douglas
+            </span></p>
+            <p class="dateline">
+            <a href="posts/spindle-adjustment-nut/" rel="bookmark">
+            <time class="published dt-published" datetime="2025-10-25T22:15:25-07:00" itemprop="datePublished" title="2025-10-25 22:15">2025-10-25 22:15</time></a>
+            </p>
+        </div>
+    </header><div class="p-summary entry-summary">
+    <div>
+<p>Here are models and drawings for the Spindle Adjustment Nut (part B-65668) for the Standard Modern 9" Utilathe (Series 1000).</p>
+<p class="more"><a href="posts/spindle-adjustment-nut/">Read more…</a></p>
+</div>
+    </div>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/vnet-iocage-freebsd-12/" class="u-url">Configuring iocage for vnet and dhcp on FreeBSD 12 </a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Steven Douglas
@@ -97,8 +113,7 @@
         </div>
     </header><div class="p-summary entry-summary">
     <div>
-<p>Giving jails their own subnet and routing traffic into that subnet with PF has some benefits. It allows jails to communicate freely between themselves, but keep that traffic on the backend private subnet. I like exposing an ssh service running in a jail on the backend, and using -D flag of ssh to proxy some ssh and http traffic to the backend network. Kind of a poor mans development environment and VPN.
-</p>
+<p>Giving jails their own subnet and routing traffic into that subnet with PF has some benefits. It allows jails to communicate freely between themselves, but keep that traffic on the backend private subnet. I like exposing an ssh service running in a jail on the backend, and using -D flag of ssh to proxy some ssh and http traffic to the backend network. Kind of a poor mans development environment and VPN.</p>
 <p class="more"><a href="posts/iocageiocell-jail-nat-networking/">Read more…</a></p>
 </div>
     </div>
@@ -130,8 +145,7 @@
         </div>
     </header><div class="p-summary entry-summary">
     <div>
-<p>Poudriere is a simple way to create FreeBSD binary packages. https://pkg.freebsd.org does this, and those packages are sufficient for most use cases. Building your own packages has some advantages:
-</p>
+<p>Poudriere is a simple way to create FreeBSD binary packages. https://pkg.freebsd.org does this, and those packages are sufficient for most use cases. Building your own packages has some advantages:</p>
 <p class="more"><a href="posts/building-packages-with-poudriere/">Read more…</a></p>
 </div>
     </div>
@@ -149,9 +163,7 @@
     <div>
 <p>I use <a href="https://www.tarsnap.com/">tarsnap</a> because it sticks to the unix philosophy...it does one thing (backups) very well. Encryption is done on the client before the backup ever leaves, and it is as easy as using tar.</p>
 <h3>Make sure you are signed up with tarsnap</h3>
-
-<p>If you haven't already, <a href="posts/backup-wordpress-website-offsite-with-tarsnap/">go get an account at tarsnap</a>. You will need one to complete this tutorial. I put about $5 in my account, and have never refilled it.
-</p>
+<p>If you haven't already, <a href="posts/backup-wordpress-website-offsite-with-tarsnap/">go get an account at tarsnap</a>. You will need one to complete this tutorial. I put about $5 in my account, and have never refilled it.</p>
 <p class="more"><a href="posts/backup-wordpress-website-offsite-with-tarsnap/">Read more…</a></p>
 </div>
     </div>
@@ -168,12 +180,11 @@
     </header><div class="p-summary entry-summary">
     <div>
 <p>I have a failed drive in my pool!</p>
-<pre class="code literal-block"><span></span># mfiutil show drives
-mfi0 Physical Drives:
- 0 (  137G) FAILED &lt;FUJITSU MBE2147RC D905 serial=D304PB40ASPD&gt; SAS E1:S0
- 1 (  932G) ONLINE &lt;MM1000GBKAL HPGB serial=9XG259SP&gt; SATA E1:S1
-</pre>
-
+<div class="code"><pre class="code literal-block">#<span class="w"> </span><span class="nv">mfiutil</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="nv">drives</span>
+<span class="nv">mfi0</span><span class="w"> </span><span class="nv">Physical</span><span class="w"> </span><span class="nv">Drives</span>:
+<span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="ss">(</span><span class="w">  </span><span class="mi">137</span><span class="nv">G</span><span class="ss">)</span><span class="w"> </span><span class="nv">FAILED</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">FUJITSU</span><span class="w"> </span><span class="nv">MBE2147RC</span><span class="w"> </span><span class="nv">D905</span><span class="w"> </span><span class="nv">serial</span><span class="o">=</span><span class="nv">D304PB40ASPD</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">SAS</span><span class="w"> </span><span class="nv">E1</span>:<span class="nv">S0</span>
+<span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="ss">(</span><span class="w">  </span><span class="mi">932</span><span class="nv">G</span><span class="ss">)</span><span class="w"> </span><span class="nv">ONLINE</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">MM1000GBKAL</span><span class="w"> </span><span class="nv">HPGB</span><span class="w"> </span><span class="nv">serial</span><span class="o">=</span><span class="mi">9</span><span class="nv">XG259SP</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">SATA</span><span class="w"> </span><span class="nv">E1</span>:<span class="nv">S1</span>
+</pre></div>
 
 <p class="more"><a href="posts/freebsd-replace-a-root-disk-from-bsdinstall-connected-to-a-raid-controller/">Read more…</a></p>
 </div>
@@ -183,11 +194,13 @@ mfi0 Physical Drives:
 
 
 
+    
 
 
 
 
-         </main><footer id="footer"><p>©2019 Steven Douglas</p>
+
+         </main><footer id="footer"><p>©2025 Steven Douglas</p>
             
         </footer>
 </div>

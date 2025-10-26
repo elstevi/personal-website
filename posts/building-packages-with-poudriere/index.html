@@ -41,7 +41,7 @@
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
     <div id="container">
          
-    <header id="header"><h1 id="brand"><a href="https://stevendouglas.me/" title="dereference" rel="home">
+    <header id="header"><h1 id="brand"><a href="../../" title="dereference" rel="home">
 
         <span id="blog-title">dereference</span>
     </a></h1>
@@ -65,7 +65,7 @@
     </ul></nav></header><main id="content"><article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">building packages with poudriere</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
                     Steven Douglas
             </span></p>
             <p class="dateline">
@@ -79,10 +79,8 @@
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
-    <div>
-<p>Poudriere is a simple way to create FreeBSD binary packages. https://pkg.freebsd.org does this, and those packages are sufficient for most use cases. Building your own packages has some advantages:
+    <p>Poudriere is a simple way to create FreeBSD binary packages. https://pkg.freebsd.org does this, and those packages are sufficient for most use cases. Building your own packages has some advantages:</p>
 <!-- TEASER_END -->
-</p>
 <ul>
 <li>Work on ports, and have a quick method for testing them</li>
     <li>Compiling ports at a different frequency than upstream</li>
@@ -92,173 +90,146 @@
 </ul>
 <p>Please keep in mind, the version of FreeBSD you want to run poudriere on must match or be greater than the target systems you are building packages for. This is because the jail binaries that are being executed must be compatible with the kernels ABI. I'm building packages for FreeBSD-10.3-RELEASE and FreeBSD-11.0-RELEASE in this example.</p>
 <h3>Poudriere installation</h3>
-
 <p>If you want a more bleeding edge version of poudriere, with newer features try <code>ports-mgmt/poudriere-devel</code>. Otherwise <code>ports-mgmt/poudriere</code>.</p>
 <h4>Via ports</h4>
-
 <p><code>cd /usr/ports/ports-mgmt/poudriere[-devel]
 make install</code></p>
 <h4>Via pkg</h4>
-
 <p><code>pkg install poudriere[-devel]</code></p>
 <h3>Configuration</h3>
-
 <h4>poudriere.conf</h4>
-
 <p>You should go through <code>/usr/local/etc/poudriere.conf</code> and make sure everything in there matches your use case, and suits you. I changed the following options:</p>
-<pre class="code literal-block"><span></span>ZPOOL=zroot
+<div class="code"><pre class="code literal-block">ZPOOL=zroot
 PKG_REPO_SIGNING_KEY=/usr/local/poudriere/keys/pkg.key
-</pre>
-
+</pre></div>
 
 <p>If you want to do signing, leave the PKG_REPO_SIGNING_KEY parameter in the configuration and hit the next section. Otherwise, skip the next section.</p>
 <h4>Signing</h4>
-
 <p>Signing is easy. There isn't any reason you shouldn't do it!</p>
-<pre class="code literal-block"><span></span>mkdir -p /usr/local/poudriere/keys
+<div class="code"><pre class="code literal-block">mkdir -p /usr/local/poudriere/keys
 chmod 600 /usr/local/poudriere/keys
 openssl genrsa -out /usr/local/poudriere/keys/pkg.key 8192
 openssl rsa -in /usr/local/poudriere/keys/pkg.key -pubout &gt; /usr/local/poudriere/keys/pkg.cert
-</pre>
-
+</pre></div>
 
 <h4>Create distfile directory</h4>
-
 <p>This is referenced in the <code>poudriere.conf</code> file.
 <code>mkdir -p /usr/ports/distfiles</code></p>
 <h3>Prepare jails</h3>
-
 <p>Create a jail for each version of FreeBSD you want to build packages for:</p>
-<pre class="code literal-block"><span></span>poudriere jail -c -j FreeBSD:10:amd64 -v 11.0-RELEASE -a amd64
+<div class="code"><pre class="code literal-block">poudriere jail -c -j FreeBSD:10:amd64 -v 11.0-RELEASE -a amd64
 poudriere jail -c -j FreeBSD:11:amd64 -v 10.3-RELEASE -a amd64
-</pre>
-
+</pre></div>
 
 <h3>Prepare ports</h3>
 
-<pre class="code literal-block"><span></span>poudriere ports -c -p upstream
-</pre>
-
+<div class="code"><pre class="code literal-block">poudriere ports -c -p upstream
+</pre></div>
 
 <h3>Building</h3>
-
 <p>I wrote this all into a script:</p>
-<pre class="code literal-block"><span></span>PORTS_TREES='upstream'
-JAILS='103-RELEASE 110-RELEASE'
+<div class="code"><pre class="code literal-block">PORTS_TREES='upstream'
+JAILS='103-RELEASE<span class="w"> </span>110-RELEASE'
 PYTHON_VERSION='3.6'
-for PORTS_TREE in <span class="cp">${</span><span class="n">PORTS_TREES</span><span class="cp">}</span>; do
+for<span class="w"> </span>PORTS_TREE<span class="w"> </span>in<span class="w"> </span><span class="cp">${</span><span class="n">PORTS_TREES</span><span class="cp">}</span>;<span class="w"> </span>do
 
-        # Update poudriere ports tree
-        poudriere ports -u -p <span class="cp">${</span><span class="n">PORTS_TREE</span><span class="cp">}</span>
+<span class="w">        </span>#<span class="w"> </span>Update<span class="w"> </span>poudriere<span class="w"> </span>ports<span class="w"> </span>tree
+<span class="w">        </span>poudriere<span class="w"> </span>ports<span class="w"> </span>-u<span class="w"> </span>-p<span class="w"> </span><span class="cp">${</span><span class="n">PORTS_TREE</span><span class="cp">}</span>
 
-        for JAIL in <span class="nv">$JAILS</span>; do
-                MAKEFILE="/usr/local/etc/poudriere.d/<span class="cp">${</span><span class="n">JAIL</span><span class="cp">}</span>-make.conf"
-                # Ensure the jail is up to date
-                poudriere jail -u -j <span class="cp">${</span><span class="n">JAIL</span><span class="cp">}</span>
+<span class="w">        </span>for<span class="w"> </span>JAIL<span class="w"> </span>in<span class="w"> </span><span class="nv">$JAILS</span>;<span class="w"> </span>do
+<span class="w">                </span>MAKEFILE="/usr/local/etc/poudriere.d/<span class="cp">${</span><span class="n">JAIL</span><span class="cp">}</span>-make.conf"
+<span class="w">                </span>#<span class="w"> </span>Ensure<span class="w"> </span>the<span class="w"> </span>jail<span class="w"> </span>is<span class="w"> </span>up<span class="w"> </span>to<span class="w"> </span>date
+<span class="w">                </span>poudriere<span class="w"> </span>jail<span class="w"> </span>-u<span class="w"> </span>-j<span class="w"> </span><span class="cp">${</span><span class="n">JAIL</span><span class="cp">}</span>
 
-                # Build the ports
-                echo "DEFAULT_VERSIONS+= python=<span class="cp">${</span><span class="n">PYTHON_VERSION</span><span class="cp">}</span>" &gt; <span class="cp">${</span><span class="n">MAKEFILE</span><span class="cp">}</span>
-                poudriere bulk -f /usr/local/poudriere/pkg-list.txt -j <span class="cp">${</span><span class="n">JAIL</span><span class="cp">}</span> -p <span class="cp">${</span><span class="n">PORTS_TREE</span><span class="cp">}</span>
-                rm -f <span class="cp">${</span><span class="n">MAKEFILE</span><span class="cp">}</span>
-        done
+<span class="w">                </span>#<span class="w"> </span>Build<span class="w"> </span>the<span class="w"> </span>ports
+<span class="w">                </span>echo<span class="w"> </span>"DEFAULT_VERSIONS+=<span class="w"> </span>python=<span class="cp">${</span><span class="n">PYTHON_VERSION</span><span class="cp">}</span>"<span class="w"> </span>&gt;<span class="w"> </span><span class="cp">${</span><span class="n">MAKEFILE</span><span class="cp">}</span>
+<span class="w">                </span>poudriere<span class="w"> </span>bulk<span class="w"> </span>-f<span class="w"> </span>/usr/local/poudriere/pkg-list.txt<span class="w"> </span>-j<span class="w"> </span><span class="cp">${</span><span class="n">JAIL</span><span class="cp">}</span><span class="w"> </span>-p<span class="w"> </span><span class="cp">${</span><span class="n">PORTS_TREE</span><span class="cp">}</span>
+<span class="w">                </span>rm<span class="w"> </span>-f<span class="w"> </span><span class="cp">${</span><span class="n">MAKEFILE</span><span class="cp">}</span>
+<span class="w">        </span>done
 
 done
-</pre>
-
+</pre></div>
 
 <p>Just run the script:</p>
-<pre class="code literal-block"><span></span>
-</pre>
-
+<div class="code"><pre class="code literal-block">
+</pre></div>
 
 <h3>Serving built packages</h3>
-
 <p>To serve built packages, I'm going to use nginx.</p>
-<pre class="code literal-block"><span></span>pkg install -y nginx
-</pre>
-
+<div class="code"><pre class="code literal-block">pkg install -y nginx
+</pre></div>
 
 <p>Simple nginx configuration. Just points the location blocks at the packages and logs.
 <code>/usr/local/etc/nginx/nginx.conf</code></p>
-<pre class="code literal-block"><span></span>load_module /usr/local/libexec/nginx/ngx_mail_module.so;
-load_module /usr/local/libexec/nginx/ngx_stream_module.so;
+<div class="code"><pre class="code literal-block"><span class="n">load_module</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">libexec</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">ngx_mail_module</span><span class="o">.</span><span class="n">so</span><span class="p">;</span>
+<span class="n">load_module</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">libexec</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">ngx_stream_module</span><span class="o">.</span><span class="n">so</span><span class="p">;</span>
 
-worker_processes  1;
+<span class="n">worker_processes</span><span class="w">  </span><span class="mi">1</span><span class="p">;</span>
 
-events {
-    worker_connections  1024;
-}
+<span class="n">events</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">worker_connections</span><span class="w">  </span><span class="mi">1024</span><span class="p">;</span>
+<span class="p">}</span>
 
-http {
-    include       mime.types;
-    default_type  application/octet-stream;
-    sendfile        on;
-    keepalive_timeout  65;
-    server {
-        listen       80;
-        server_name  localhost;
-        location /logs {
-            alias   /usr/local/poudriere/data/logs/bulk;
-            autoindex on;
-        }
-        location / {
-            root   /usr/local/poudriere/data/packages/;
-            index  index.html index.htm;
-            autoindex on;
-        }
-    }
-}
-</pre>
-
+<span class="n">http</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">include</span><span class="w">       </span><span class="n">mime</span><span class="o">.</span><span class="n">types</span><span class="p">;</span>
+<span class="w">    </span><span class="n">default_type</span><span class="w">  </span><span class="n">application</span><span class="o">/</span><span class="n">octet</span><span class="o">-</span><span class="n">stream</span><span class="p">;</span>
+<span class="w">    </span><span class="n">sendfile</span><span class="w">        </span><span class="n">on</span><span class="p">;</span>
+<span class="w">    </span><span class="n">keepalive_timeout</span><span class="w">  </span><span class="mi">65</span><span class="p">;</span>
+<span class="w">    </span><span class="n">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">listen</span><span class="w">       </span><span class="mi">80</span><span class="p">;</span>
+<span class="w">        </span><span class="n">server_name</span><span class="w">  </span><span class="n">localhost</span><span class="p">;</span>
+<span class="w">        </span><span class="n">location</span><span class="w"> </span><span class="o">/</span><span class="n">logs</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">alias</span><span class="w">   </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">poudriere</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">bulk</span><span class="p">;</span>
+<span class="w">            </span><span class="n">autoindex</span><span class="w"> </span><span class="n">on</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">location</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">root</span><span class="w">   </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">poudriere</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">packages</span><span class="o">/</span><span class="p">;</span>
+<span class="w">            </span><span class="n">index</span><span class="w">  </span><span class="n">index</span><span class="o">.</span><span class="n">html</span><span class="w"> </span><span class="n">index</span><span class="o">.</span><span class="n">htm</span><span class="p">;</span>
+<span class="w">            </span><span class="n">autoindex</span><span class="w"> </span><span class="n">on</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 
 <p>Enable it at boot time:</p>
-<pre class="code literal-block"><span></span>sysrc nginx_enable="YES"
-</pre>
-
+<div class="code"><pre class="code literal-block">sysrc nginx_enable="YES"
+</pre></div>
 
 <p>Start it on the running system:</p>
-<pre class="code literal-block"><span></span>service nginx start
-</pre>
-
+<div class="code"><pre class="code literal-block">service nginx start
+</pre></div>
 
 <p>You should be able to see your packages by going to your poudriere server in your web browser. If you want to see the logs, simply apend /logs to the end of your URL.</p>
 <h3>Configuration on target system</h3>
-
 <p>I suggest writing the pkg.conf and placing it in the webroot of your nginx server:
 <code>/usr/local/poudriere/data/packages/pkg.douglas-enterprises.com.conf</code></p>
-<pre class="code literal-block"><span></span># Douglas Enterprises repo configuration 
-pkg.douglas-enterprises.com: {
-  url: "pkg+http://pkg.douglas-enterprises.com/<span class="cp">${</span><span class="n">ABI</span><span class="cp">}</span>-upstream",
-  mirror_type: "srv",
-  signature_type: "pubkey",
-  pubkey: "/usr/local/etc/pkg/certs/pkg.douglas-enterprises.com.cert",
-  enabled: yes
+<div class="code"><pre class="code literal-block">#<span class="w"> </span>Douglas<span class="w"> </span>Enterprises<span class="w"> </span>repo<span class="w"> </span>configuration<span class="w"> </span>
+pkg.douglas-enterprises.com:<span class="w"> </span>{
+<span class="w">  </span>url:<span class="w"> </span>"pkg+http://pkg.douglas-enterprises.com/<span class="cp">${</span><span class="n">ABI</span><span class="cp">}</span>-upstream",
+<span class="w">  </span>mirror_type:<span class="w"> </span>"srv",
+<span class="w">  </span>signature_type:<span class="w"> </span>"pubkey",
+<span class="w">  </span>pubkey:<span class="w"> </span>"/usr/local/etc/pkg/certs/pkg.douglas-enterprises.com.cert",
+<span class="w">  </span>enabled:<span class="w"> </span>yes
 }
-</pre>
-
+</pre></div>
 
 <p>I also suggest copying the cert to the webroot for easy fetching:</p>
-<pre class="code literal-block"><span></span>cp /usr/local/poudriere/keys/pkg.cert /usr/local/poudriere/data/packages/pkg.douglas-enterprises.com.cert
-</pre>
-
+<div class="code"><pre class="code literal-block"><span class="nx">cp</span><span class="w"> </span><span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">local</span><span class="o">/</span><span class="nx">poudriere</span><span class="o">/</span><span class="nx">keys</span><span class="o">/</span><span class="nx">pkg</span><span class="p">.</span><span class="nx">cert</span><span class="w"> </span><span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">local</span><span class="o">/</span><span class="nx">poudriere</span><span class="o">/</span><span class="nx">data</span><span class="o">/</span><span class="nx">packages</span><span class="o">/</span><span class="nx">pkg</span><span class="p">.</span><span class="nx">douglas</span><span class="o">-</span><span class="nx">enterprises</span><span class="p">.</span><span class="nx">com</span><span class="p">.</span><span class="nx">cert</span>
+</pre></div>
 
 <p>Now installation of this repo is super easy on the target system:</p>
-<pre class="code literal-block"><span></span>mkdir -p /usr/local/etc/pkg/certs /usr/local/etc/pkg/repos
+<div class="code"><pre class="code literal-block">mkdir -p /usr/local/etc/pkg/certs /usr/local/etc/pkg/repos
 fetch -o /usr/local/etc/pkg/certs http://pkg.douglas-enterprises.com/pkg.douglas-enterprises.com.cert
 fetch -o /usr/local/etc/pkg/repos http://pkg.douglas-enterprises.com/pkg.douglas-enterprises.com.conf
 pkg update -f
-</pre>
-
+</pre></div>
 
 <h3>Automation</h3>
-
 <p>Whenever I want to build, I simply run that script. It keeps everything up to date, and is perfect to get added to cron:</p>
-<pre class="code literal-block"><span></span>0 2 * * * /usr/local/poudriere/run_poudriere.sh
-</pre>
-
+<div class="code"><pre class="code literal-block"><span class="mf">0</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="o">/</span><span class="nb">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">poudriere</span><span class="o">/</span><span class="kr">run</span><span class="n">_poudriere</span><span class="mf">.</span><span class="n">sh</span>
+</pre></div>
 
 <p>I also checked a few files into a github repo https://github.com/elstevi/poudriere-config and set up an auto deploy mechanism with cron. This allows me to change what packages poudriere is building from anywhere without having to ssh into the machine.</p>
-</div>
     </div>
     <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
 <li><a class="tag p-category" href="../../categories/freebsd/" rel="tag">freebsd</a></li>
@@ -271,7 +242,7 @@ pkg update -f
             <li class="next">
                 <a href="../linux-phonehome/" rel="next" title="linux phonehome">Next post</a>
             </li>
-        </ul></nav></aside></article></main><footer id="footer"><p>©2019 Steven Douglas</p>
+        </ul></nav></aside></article></main><footer id="footer"><p>©2025 Steven Douglas</p>
             
         </footer>
 </div>

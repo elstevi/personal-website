@@ -40,7 +40,7 @@
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
     <div id="container">
          
-    <header id="header"><h1 id="brand"><a href="https://stevendouglas.me/" title="dereference" rel="home">
+    <header id="header"><h1 id="brand"><a href="../../" title="dereference" rel="home">
 
         <span id="blog-title">dereference</span>
     </a></h1>
@@ -64,7 +64,7 @@
     </ul></nav></header><main id="content"><article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">iocage/iocell jail nat networking</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
                     Steven Douglas
             </span></p>
             <p class="dateline">
@@ -78,76 +78,66 @@
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
-    <div>
-<p>Giving jails their own subnet and routing traffic into that subnet with PF has some benefits. It allows jails to communicate freely between themselves, but keep that traffic on the backend private subnet. I like exposing an ssh service running in a jail on the backend, and using -D flag of ssh to proxy some ssh and http traffic to the backend network. Kind of a poor mans development environment and VPN.
+    <p>Giving jails their own subnet and routing traffic into that subnet with PF has some benefits. It allows jails to communicate freely between themselves, but keep that traffic on the backend private subnet. I like exposing an ssh service running in a jail on the backend, and using -D flag of ssh to proxy some ssh and http traffic to the backend network. Kind of a poor mans development environment and VPN.</p>
 <!-- TEASER_END -->
-</p>
 <h3>Create backend subnet</h3>
-<p>The subnet I will be using in this example is 172.16.17.0/24. The jail host will be using the gateway IP 172.16.17.1. I'll create the bridge for the next reboot:</p>
-<pre class="code literal-block"><span></span>sysrc cloned_interfaces+="bridge0"
-sysrc ifconfig_bridge0="172.16.17.1/24"
-</pre>
 
+<p>The subnet I will be using in this example is 172.16.17.0/24. The jail host will be using the gateway IP 172.16.17.1. I'll create the bridge for the next reboot:</p>
+<div class="code"><pre class="code literal-block">sysrc cloned_interfaces+="bridge0"
+sysrc ifconfig_bridge0="172.16.17.1/24"
+</pre></div>
 
 <p>And create it on the live system:</p>
-<pre class="code literal-block"><span></span>ifconfig bridge0 create
+<div class="code"><pre class="code literal-block">ifconfig bridge0 create
 ifconfig bridge0 172.16.17.1/24 up
-</pre>
-
+</pre></div>
 
 <h3>Configure traffic routing into and out of the backend subnet</h3>
 
 <p>Configure pf like this: (/etc/pf.conf)</p>
-<pre class="code literal-block"><span></span># External interface, the wan side of the nat
-ext_if = "cxgb0"
+<div class="code"><pre class="code literal-block"><span class="cp"># External interface, the wan side of the nat</span>
+<span class="n">ext_if</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"cxgb0"</span>
 
-# Internal interface
-int_if = "bridge0"
-localnet = $int_if:network
+<span class="cp"># Internal interface</span>
+<span class="n">int_if</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"bridge0"</span>
+<span class="n">localnet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">$</span><span class="n">int_if</span><span class="o">:</span><span class="n">network</span>
 
-ports_to_forward="{ 80, 443 }"
-forward_host="172.16.17.10"
+<span class="n">ports_to_forward</span><span class="o">=</span><span class="s">"{ 80, 443 }"</span>
+<span class="n">forward_host</span><span class="o">=</span><span class="s">"172.16.17.10"</span>
 
-nat on $ext_if inet from $localnet to any -&gt; ($ext_if)
-rdr on $ext_if proto tcp from any to any port $ports_to_forward -&gt; $forward_host
+<span class="n">nat</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="err">$</span><span class="n">ext_if</span><span class="w"> </span><span class="n">inet</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="err">$</span><span class="n">localnet</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="kr">any</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="err">$</span><span class="n">ext_if</span><span class="p">)</span>
+<span class="n">rdr</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="err">$</span><span class="n">ext_if</span><span class="w"> </span><span class="n">proto</span><span class="w"> </span><span class="n">tcp</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="kr">any</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="kr">any</span><span class="w"> </span><span class="n">port</span><span class="w"> </span><span class="err">$</span><span class="n">ports_to_forward</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="err">$</span><span class="n">forward_host</span>
 
-pass from { self, $localnet } to any keep state
-pass in on $ext_if proto {udp, tcp} from any to any port $ports_to_forward keep state
+<span class="n">pass</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">self</span><span class="p">,</span><span class="w"> </span><span class="err">$</span><span class="n">localnet</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="kr">any</span><span class="w"> </span><span class="kr">keep</span><span class="w"> </span><span class="n">state</span>
+<span class="n">pass</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="err">$</span><span class="n">ext_if</span><span class="w"> </span><span class="n">proto</span><span class="w"> </span><span class="p">{</span><span class="n">udp</span><span class="p">,</span><span class="w"> </span><span class="n">tcp</span><span class="p">}</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="kr">any</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="kr">any</span><span class="w"> </span><span class="n">port</span><span class="w"> </span><span class="err">$</span><span class="n">ports_to_forward</span><span class="w"> </span><span class="kr">keep</span><span class="w"> </span><span class="n">state</span>
 
-set skip on bridge0
-</pre>
-
+<span class="nf">set</span><span class="w"> </span><span class="kr">skip</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">bridge0</span>
+</pre></div>
 
 <p>Enable PF on next boot and on the live system:</p>
-<pre class="code literal-block"><span></span>sysrc pf_enable="YES"
+<div class="code"><pre class="code literal-block">sysrc pf_enable="YES"
 service pf start
-</pre>
-
+</pre></div>
 
 <p>Also, enable gateway on boot and on the live system:</p>
-<pre class="code literal-block"><span></span>sysrc gateway_enable="YES"
+<div class="code"><pre class="code literal-block">sysrc gateway_enable="YES"
 service gateway start
-</pre>
-
+</pre></div>
 
 <p>This enables the FreeBSD machine to forward ipv4 packets between subnets it sees.</p>
 <h3>Create jail and configure it to have an IP on the bridge</h3>
-
 <p>This will create a jail on the subnet with access</p>
-<pre class="code literal-block"><span></span>iocell create tag=testjail ip4_addr="bridge0|172.16.17.10" defaultrouter="172.16.17.1" boot=on
-iocell start testjail
-iocell console testjail
-</pre>
-
+<div class="code"><pre class="code literal-block"><span class="nx">iocell</span><span class="w"> </span><span class="nx">create</span><span class="w"> </span><span class="nx">tag</span><span class="p">=</span><span class="nx">testjail</span><span class="w"> </span><span class="nx">ip4_addr</span><span class="p">=</span><span class="s">"bridge0|172.16.17.10"</span><span class="w"> </span><span class="nx">defaultrouter</span><span class="p">=</span><span class="s">"172.16.17.1"</span><span class="w"> </span><span class="nx">boot</span><span class="p">=</span><span class="nx">on</span>
+<span class="nx">iocell</span><span class="w"> </span><span class="nx">start</span><span class="w"> </span><span class="nx">testjail</span>
+<span class="nx">iocell</span><span class="w"> </span><span class="nx">console</span><span class="w"> </span><span class="nx">testjail</span>
+</pre></div>
 
 <p>Next, to ensure that inbound traffic on ports 80 and 443 into to the WAN ip, I just installed nginx and started it up.</p>
-<pre class="code literal-block"><span></span>pkg install -y nginx
+<div class="code"><pre class="code literal-block">pkg install -y nginx
 service nginx onestart
-</pre>
-
+</pre></div>
 
 <p>Done!</p>
-</div>
     </div>
     <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
 <li><a class="tag p-category" href="../../categories/bridge/" rel="tag">bridge</a></li>
@@ -162,7 +152,7 @@ service nginx onestart
             <li class="next">
                 <a href="../connecting-to-a-drac-5-from-modern-linux/" rel="next" title="Connecting to a drac 5 from modern linux">Next post</a>
             </li>
-        </ul></nav></aside></article></main><footer id="footer"><p>©2019 Steven Douglas</p>
+        </ul></nav></aside></article></main><footer id="footer"><p>©2025 Steven Douglas</p>
             
         </footer>
 </div>

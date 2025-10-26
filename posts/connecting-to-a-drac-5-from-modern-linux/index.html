@@ -40,7 +40,7 @@ In recent years, it has been increasingly difficult to administer older dell ser
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
     <div id="container">
          
-    <header id="header"><h1 id="brand"><a href="https://stevendouglas.me/" title="dereference" rel="home">
+    <header id="header"><h1 id="brand"><a href="../../" title="dereference" rel="home">
 
         <span id="blog-title">dereference</span>
     </a></h1>
@@ -64,7 +64,7 @@ In recent years, it has been increasingly difficult to administer older dell ser
     </ul></nav></header><main id="content"><article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Connecting to a drac 5 from modern linux</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
                     Steven Douglas
             </span></p>
             <p class="dateline">
@@ -78,17 +78,15 @@ In recent years, it has been increasingly difficult to administer older dell ser
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
-    <div>
-<h2>The problem</h2>
+    <h2>The problem</h2>
 <p>In recent years, it has been increasingly difficult to administer older dell servers from Linux. icedtea-web works great for idrac6+, but 5- still requires either activex or an older version of java. Especially to get the virtual media working.</p>
 <!-- TEASER_END -->
 
 <h2>My solution</h2>
 <p>Wine allows you to run Windows binaries on Linux. It provides a virtual 'C:/' drive, and uses a syscall translation layer to run the binary a near native speed. Projects like PlayOnLinux use Wine to offer OOTB solutions for popular Windows programs on Linux. Wine is surprisingly easy to use. It is available in most package repositories, but I prefer to <a href="https://wiki.winehq.org/Download">get it right from them</a>.</p>
 <p>Installation on a debian/ubuntu system is easy. If you have added the new repo or want to pull from the repos of your distribution, the commands are the same:</p>
-<pre class="code literal-block"><span></span># sudo apt install wine-stable
-</pre>
-
+<div class="code"><pre class="code literal-block"># sudo apt install wine-stable
+</pre></div>
 
 <p>Next, you need to decide the software you want to install in wine. It is worth noting that by default Wine will setup your drive_c and libraries in <code>~/.wine</code>. This can be controlled by the WINEPREFIX environment variable, to change the location. I have decided that I want to install Firefox 15.01 (Random guess) and the last Java 6.</p>
 <ul>
@@ -97,25 +95,21 @@ In recent years, it has been increasingly difficult to administer older dell ser
 <a href="http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase6-419409.html">Java 6u45 (jdk-6u45-windows-i586.exe)</a>. Unfortunately, you need an Oracle account to get at this archive and agree to the terms of use, but you do not need to pay for anything. I happened to have an oracle account from filing a MySQL bug.</li>
 </ul>
 <p>Now, just run each EXE and go through the install process as you would with any other windows program:</p>
-<pre class="code literal-block"><span></span># wine ~/Downloads/Firefox\ Setup\ 15.0.1.exe
-# wine ~/Downloads/jre-6u45-windows-i586.exe
-</pre>
-
+<div class="code"><pre class="code literal-block"><span class="c1"># wine ~/Downloads/Firefox\ Setup\ 15.0.1.exe</span>
+<span class="c1"># wine ~/Downloads/jre-6u45-windows-i586.exe</span>
+</pre></div>
 
 <p>After this you will be greeted by the respective installers. Install them as you normally would. Wine put a desktop icon for Firefox on my linux desktop. I used that to start up my Wine powered Firefox. You could also start firefox like this:</p>
-<pre class="code literal-block"><span></span># wine ~/.wine/drive_c/Program\ Files\ \(x86\)/Mozilla\ Firefox/firefox.exe
-</pre>
-
+<div class="code"><pre class="code literal-block"><span class="gh">#</span> wine ~/.wine/drive_c/Program\ Files\ \(x86\)/Mozilla\ Firefox/firefox.exe
+</pre></div>
 
 <p>Navigate to your drac address. Success! You can now use virtual console and virtual media!</p>
 <p><img alt="launch drac virtual console" src="../../post-drac5/drac_launch_console.png"><img alt="launch drac virtual console" src="../../post-drac5/drac_virtual_console.png"><img alt="launch drac virtual console" src="../../post-drac5/drac_launch_vm.png">
 Keep in mind that if you want to attach an ISO it needs to exist within ~/.wine/drive_c so that windows can see it. You can either download the iso using the wine firefox (bad idea to browse non trusted websites with such an out of date browser, though), or just copy it in:</p>
-<pre class="code literal-block"><span></span># cp Downloads/FreeBSD-11.1-RELEASE-amd64-disk1.iso ~/.wine/drive_c/users/sdouglas/
-</pre>
-
+<div class="code"><pre class="code literal-block"><span class="c1"># cp Downloads/FreeBSD-11.1-RELEASE-amd64-disk1.iso ~/.wine/drive_c/users/sdouglas/</span>
+</pre></div>
 
 <p><img alt="launch drac virtual console" src="../../post-drac5/drac_virtual_media.png"></p>
-</div>
     </div>
     <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
 <li><a class="tag p-category" href="../../categories/drac/" rel="tag">drac</a></li>
@@ -129,7 +123,7 @@ Keep in mind that if you want to attach an ISO it needs to exist within ~/.wine/
             <li class="next">
                 <a href="../vnet-iocage-freebsd-12/" rel="next" title="Configuring iocage for vnet and dhcp on FreeBSD 12 ">Next post</a>
             </li>
-        </ul></nav></aside></article></main><footer id="footer"><p>©2019 Steven Douglas</p>
+        </ul></nav></aside></article></main><footer id="footer"><p>©2025 Steven Douglas</p>
             
         </footer>
 </div>

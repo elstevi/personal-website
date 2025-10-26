@@ -7,98 +7,122 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://stevendouglas.me/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/2018/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/2019/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://stevendouglas.me/2025/</loc>
+  <lastmod>2025-10-26T05:34:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/archive.html</loc>
-  <lastmod>2019-03-22T06:32:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/categories/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://stevendouglas.me/categories/b-65668/</loc>
+  <lastmod>2025-10-26T05:34:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/categories/bridge/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://stevendouglas.me/categories/cat_machining-lathe/</loc>
+  <lastmod>2025-10-26T05:34:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/categories/cat_posts/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/categories/drac/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/categories/freebsd/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/categories/hax/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/categories/jails/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://stevendouglas.me/categories/lathe/</loc>
+  <lastmod>2025-10-26T05:34:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/categories/linux/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/categories/pf/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/categories/poudriere/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/categories/ssh/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://stevendouglas.me/categories/utilathe-9-series-1000/</loc>
+  <lastmod>2025-10-26T05:34:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/categories/vnet-vimage-iocage-freebsd-120-dhcp/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/categories/wine/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/posts/backup-wordpress-website-offsite-with-tarsnap/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/posts/building-packages-with-poudriere/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/posts/connecting-to-a-drac-5-from-modern-linux/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/posts/freebsd-replace-a-root-disk-from-bsdinstall-connected-to-a-raid-controller/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/posts/iocageiocell-jail-nat-networking/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/posts/linux-phonehome/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://stevendouglas.me/posts/spindle-adjustment-nut/</loc>
+  <lastmod>2025-10-26T05:34:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/posts/vnet-iocage-freebsd-12/</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </url>
 </urlset>

@@ -39,7 +39,7 @@ mfi0 Physical Drives:
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
     <div id="container">
          
-    <header id="header"><h1 id="brand"><a href="https://stevendouglas.me/" title="dereference" rel="home">
+    <header id="header"><h1 id="brand"><a href="../../" title="dereference" rel="home">
 
         <span id="blog-title">dereference</span>
     </a></h1>
@@ -63,7 +63,7 @@ mfi0 Physical Drives:
     </ul></nav></header><main id="content"><article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">FreeBSD replace a root disk from bsdinstall connected to a RAID controller</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
                     Steven Douglas
             </span></p>
             <p class="dateline">
@@ -77,92 +77,83 @@ mfi0 Physical Drives:
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
-    <div>
-<p>I have a failed drive in my pool!</p>
-<pre class="code literal-block"><span></span># mfiutil show drives
-mfi0 Physical Drives:
- 0 (  137G) FAILED &lt;FUJITSU MBE2147RC D905 serial=D304PB40ASPD&gt; SAS E1:S0
- 1 (  932G) ONLINE &lt;MM1000GBKAL HPGB serial=9XG259SP&gt; SATA E1:S1
-</pre>
-
+    <p>I have a failed drive in my pool!</p>
+<div class="code"><pre class="code literal-block">#<span class="w"> </span><span class="nv">mfiutil</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="nv">drives</span>
+<span class="nv">mfi0</span><span class="w"> </span><span class="nv">Physical</span><span class="w"> </span><span class="nv">Drives</span>:
+<span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="ss">(</span><span class="w">  </span><span class="mi">137</span><span class="nv">G</span><span class="ss">)</span><span class="w"> </span><span class="nv">FAILED</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">FUJITSU</span><span class="w"> </span><span class="nv">MBE2147RC</span><span class="w"> </span><span class="nv">D905</span><span class="w"> </span><span class="nv">serial</span><span class="o">=</span><span class="nv">D304PB40ASPD</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">SAS</span><span class="w"> </span><span class="nv">E1</span>:<span class="nv">S0</span>
+<span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="ss">(</span><span class="w">  </span><span class="mi">932</span><span class="nv">G</span><span class="ss">)</span><span class="w"> </span><span class="nv">ONLINE</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">MM1000GBKAL</span><span class="w"> </span><span class="nv">HPGB</span><span class="w"> </span><span class="nv">serial</span><span class="o">=</span><span class="mi">9</span><span class="nv">XG259SP</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">SATA</span><span class="w"> </span><span class="nv">E1</span>:<span class="nv">S1</span>
+</pre></div>
 
 <!-- TEASER_END -->
 
 <p>I just replaced the old bad drive with a shiny new (larger) one:</p>
-<pre class="code literal-block"><span></span># mfiutil show drives
-mfi0 Physical Drives:
- 0 (  932G) UNCONFIGURED GOOD &lt;MM1000GBKAL HPGC serial=9XG271GS&gt; SATA E1:S0
- 1 (  932G) ONLINE            &lt;MM1000GBKAL HPGB serial=9XG259SP&gt; SATA E1:S1
-</pre>
-
+<div class="code"><pre class="code literal-block">#<span class="w"> </span><span class="nv">mfiutil</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="nv">drives</span>
+<span class="nv">mfi0</span><span class="w"> </span><span class="nv">Physical</span><span class="w"> </span><span class="nv">Drives</span>:
+<span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="ss">(</span><span class="w">  </span><span class="mi">932</span><span class="nv">G</span><span class="ss">)</span><span class="w"> </span><span class="nv">UNCONFIGURED</span><span class="w"> </span><span class="nv">GOOD</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">MM1000GBKAL</span><span class="w"> </span><span class="nv">HPGC</span><span class="w"> </span><span class="nv">serial</span><span class="o">=</span><span class="mi">9</span><span class="nv">XG271GS</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">SATA</span><span class="w"> </span><span class="nv">E1</span>:<span class="nv">S0</span>
+<span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="ss">(</span><span class="w">  </span><span class="mi">932</span><span class="nv">G</span><span class="ss">)</span><span class="w"> </span><span class="nv">ONLINE</span><span class="w">            </span><span class="o">&lt;</span><span class="nv">MM1000GBKAL</span><span class="w"> </span><span class="nv">HPGB</span><span class="w"> </span><span class="nv">serial</span><span class="o">=</span><span class="mi">9</span><span class="nv">XG259SP</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">SATA</span><span class="w"> </span><span class="nv">E1</span>:<span class="nv">S1</span>
+</pre></div>
 
 <p>And finally create a new raid0 to pass this disk through:</p>
-<pre class="code literal-block"><span></span># mfiutil create raid0 1
+<div class="code"><pre class="code literal-block"># mfiutil create raid0 1
 mfiutil: Command failed: Status: 0x54
 mfiutil: Failed to add volume: Input/output error
-</pre>
-
+</pre></div>
 
 <p>Uh oh. After installing <code>sysutils/megacli</code> from ports, eventually I figured out that this was an issue with data in the controller cache:</p>
-<pre class="code literal-block"><span></span># MegaCli -CfgLdAdd -r0 [32:1] -a0
+<div class="code"><pre class="code literal-block">#<span class="w"> </span><span class="nv">MegaCli</span><span class="w"> </span><span class="o">-</span><span class="nv">CfgLdAdd</span><span class="w"> </span><span class="o">-</span><span class="nv">r0</span><span class="w"> </span>[<span class="mi">32</span>:<span class="mi">1</span>]<span class="w"> </span><span class="o">-</span><span class="nv">a0</span>
 
 
-Adapter 0: Configure Adapter Failed
+<span class="nv">Adapter</span><span class="w"> </span><span class="mi">0</span>:<span class="w"> </span><span class="nv">Configure</span><span class="w"> </span><span class="nv">Adapter</span><span class="w"> </span><span class="nv">Failed</span>
 
-FW error description:
-  The current operation is not allowed because the controller has data in cache for offline or missing virtual drives.
+<span class="nv">FW</span><span class="w"> </span><span class="nv">error</span><span class="w"> </span><span class="nv">description</span>:
+<span class="w">  </span><span class="nv">The</span><span class="w"> </span><span class="nv">current</span><span class="w"> </span><span class="nv">operation</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">not</span><span class="w"> </span><span class="nv">allowed</span><span class="w"> </span><span class="nv">because</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">controller</span><span class="w"> </span><span class="nv">has</span><span class="w"> </span><span class="nv">data</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">cache</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">offline</span><span class="w"> </span><span class="nv">or</span><span class="w"> </span><span class="nv">missing</span><span class="w"> </span><span class="nv">virtual</span><span class="w"> </span><span class="nv">drives</span>.
 
-Exit Code: 0x54
-</pre>
-
+<span class="k">Exit</span><span class="w"> </span><span class="nv">Code</span>:<span class="w"> </span><span class="mi">0</span><span class="nv">x54</span>
+</pre></div>
 
 <p>32 is my adapter ID. I found that in the LSI Controller list. Now we can discard that cache data:</p>
-<pre class="code literal-block"><span></span># MegaCli -DiscardPreservedCache -L0 -a0
-Adapter #0
-Virtual Drive(Target ID 00): Preserved Cache Data Cleared.
-Exit Code: 0x00
-</pre>
-
+<div class="code"><pre class="code literal-block">#<span class="w"> </span><span class="nv">MegaCli</span><span class="w"> </span><span class="o">-</span><span class="nv">DiscardPreservedCache</span><span class="w"> </span><span class="o">-</span><span class="nv">L0</span><span class="w"> </span><span class="o">-</span><span class="nv">a0</span>
+<span class="nv">Adapter</span><span class="w"> </span><span class="sc">#0</span>
+<span class="nv">Virtual</span><span class="w"> </span><span class="nv">Drive</span><span class="ss">(</span><span class="nv">Target</span><span class="w"> </span><span class="nv">ID</span><span class="w"> </span><span class="mi">00</span><span class="ss">)</span>:<span class="w"> </span><span class="nv">Preserved</span><span class="w"> </span><span class="nv">Cache</span><span class="w"> </span><span class="nv">Data</span><span class="w"> </span><span class="nv">Cleared</span>.
+<span class="k">Exit</span><span class="w"> </span><span class="nv">Code</span>:<span class="w"> </span><span class="mi">0</span><span class="nv">x00</span>
+</pre></div>
 
 <p>Now:</p>
-<pre class="code literal-block"><span></span># mfiutil create raid0 1
-</pre>
-
+<div class="code"><pre class="code literal-block"># mfiutil create raid0 1
+</pre></div>
 
 <p>Returns normally.</p>
 <p>Now you can partition the GPT disk (I am ommitting the swap partition):</p>
-<pre class="code literal-block"><span></span># gpart create -s gpt /dev/mfid0
+<div class="code"><pre class="code literal-block"># gpart create -s gpt /dev/mfid0
 # gpart add -t freebsd-boot -s 512K mfid0
 # gpart add -t freebsd-zfs -A 1M mfid0
 # gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 mfid0
-</pre>
-
+</pre></div>
 
 <p>And replace the disk:</p>
-<pre class="code literal-block"><span></span># zpool replace zroot 5429029324314476965 /dev/mfid0p2
-# zpool status zroot
-  pool: zroot
- state: DEGRADED
-status: One or more devices is currently being resilvered.  The pool will
-        continue to function, possibly in a degraded state.
-action: Wait for the resilver to complete.
-  scan: resilver in progress since Thu Nov 23 23:43:26 2017
-        999M scanned out of 55.5G at 22.2M/s, 0h41m to go
-        999M resilvered, 1.76% done
-config:
+<div class="code"><pre class="code literal-block"><span class="err">#</span><span class="w"> </span><span class="n">zpool</span><span class="w"> </span><span class="nf">replace</span><span class="w"> </span><span class="n">zroot</span><span class="w"> </span><span class="mi">5429029324314476965</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mfid0p2</span>
+<span class="err">#</span><span class="w"> </span><span class="n">zpool</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="n">zroot</span>
+<span class="w">  </span><span class="nl">pool</span><span class="p">:</span><span class="w"> </span><span class="n">zroot</span>
+<span class="w"> </span><span class="k">state</span><span class="err">:</span><span class="w"> </span><span class="n">DEGRADED</span>
+<span class="nl">status</span><span class="p">:</span><span class="w"> </span><span class="n">One</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">more</span><span class="w"> </span><span class="n">devices</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">currently</span><span class="w"> </span><span class="n">being</span><span class="w"> </span><span class="n">resilvered</span><span class="p">.</span><span class="w">  </span><span class="n">The</span><span class="w"> </span><span class="n">pool</span><span class="w"> </span><span class="n">will</span>
+<span class="w">        </span><span class="k">continue</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="k">function</span><span class="p">,</span><span class="w"> </span><span class="n">possibly</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">degraded</span><span class="w"> </span><span class="k">state</span><span class="p">.</span>
+<span class="k">action</span><span class="err">:</span><span class="w"> </span><span class="n">Wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">resilver</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">complete</span><span class="p">.</span>
+<span class="w">  </span><span class="nl">scan</span><span class="p">:</span><span class="w"> </span><span class="n">resilver</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">progress</span><span class="w"> </span><span class="n">since</span><span class="w"> </span><span class="n">Thu</span><span class="w"> </span><span class="n">Nov</span><span class="w"> </span><span class="mi">23</span><span class="w"> </span><span class="mi">23</span><span class="err">:</span><span class="mi">43</span><span class="err">:</span><span class="mi">26</span><span class="w"> </span><span class="mi">2017</span>
+<span class="w">        </span><span class="mi">999</span><span class="n">M</span><span class="w"> </span><span class="n">scanned</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="mf">55.5</span><span class="n">G</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mf">22.2</span><span class="n">M</span><span class="o">/</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="n">h41m</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="k">go</span>
+<span class="w">        </span><span class="mi">999</span><span class="n">M</span><span class="w"> </span><span class="n">resilvered</span><span class="p">,</span><span class="w"> </span><span class="mf">1.76</span><span class="o">%</span><span class="w"> </span><span class="n">done</span>
+<span class="nl">config</span><span class="p">:</span>
 
-        NAME                       STATE     READ WRITE CKSUM
-        zroot                      DEGRADED     0     0     0
-          mirror-0                 DEGRADED     0     0     0
-            replacing-0            UNAVAIL      0     0     0
-              3351751284279945146  UNAVAIL      0   296     0  was /dev/mfid0p3
-              mfid0p2              ONLINE       0     0     0  (resilvering)
-            mfid1p2                ONLINE       0     0     0
-</pre>
-
+<span class="w">        </span><span class="n">NAME</span><span class="w">                       </span><span class="k">STATE</span><span class="w">     </span><span class="k">READ</span><span class="w"> </span><span class="k">WRITE</span><span class="w"> </span><span class="n">CKSUM</span>
+<span class="w">        </span><span class="n">zroot</span><span class="w">                      </span><span class="n">DEGRADED</span><span class="w">     </span><span class="mi">0</span><span class="w">     </span><span class="mi">0</span><span class="w">     </span><span class="mi">0</span>
+<span class="w">          </span><span class="n">mirror</span><span class="o">-</span><span class="mi">0</span><span class="w">                 </span><span class="n">DEGRADED</span><span class="w">     </span><span class="mi">0</span><span class="w">     </span><span class="mi">0</span><span class="w">     </span><span class="mi">0</span>
+<span class="w">            </span><span class="n">replacing</span><span class="o">-</span><span class="mi">0</span><span class="w">            </span><span class="n">UNAVAIL</span><span class="w">      </span><span class="mi">0</span><span class="w">     </span><span class="mi">0</span><span class="w">     </span><span class="mi">0</span>
+<span class="w">              </span><span class="mi">3351751284279945146</span><span class="w">  </span><span class="n">UNAVAIL</span><span class="w">      </span><span class="mi">0</span><span class="w">   </span><span class="mi">296</span><span class="w">     </span><span class="mi">0</span><span class="w">  </span><span class="n">was</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mfid0p3</span>
+<span class="w">              </span><span class="n">mfid0p2</span><span class="w">              </span><span class="n">ONLINE</span><span class="w">       </span><span class="mi">0</span><span class="w">     </span><span class="mi">0</span><span class="w">     </span><span class="mi">0</span><span class="w">  </span><span class="p">(</span><span class="n">resilvering</span><span class="p">)</span>
+<span class="w">            </span><span class="n">mfid1p2</span><span class="w">                </span><span class="n">ONLINE</span><span class="w">       </span><span class="mi">0</span><span class="w">     </span><span class="mi">0</span><span class="w">     </span><span class="mi">0</span>
+</pre></div>
 
 <p>Eventually, when the resilver finishes, you will be left with this:</p>
-<pre class="code literal-block"><span></span># zpool status zroot
+<div class="code"><pre class="code literal-block"># zpool status zroot
   pool: zroot
  state: ONLINE
   scan: resilvered 55.5G in 0h28m with 0 errors on Fri Nov 24 00:11:52 2017
@@ -175,14 +166,13 @@ config:
             mfid1p2  ONLINE       0     0     0
 
 errors: No known data errors
-</pre>
-</div>
+</pre></div>
     </div>
     <aside class="postpromonav"><nav><ul class="pager hidden-print">
 <li class="next">
                 <a href="../backup-wordpress-website-offsite-with-tarsnap/" rel="next" title="Backup Wordpress website offsite with Tarsnap">Next post</a>
             </li>
-        </ul></nav></aside></article></main><footer id="footer"><p>©2019 Steven Douglas</p>
+        </ul></nav></aside></article></main><footer id="footer"><p>©2025 Steven Douglas</p>
             
         </footer>
 </div>

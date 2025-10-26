@@ -6,59 +6,75 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
+  <loc>https://stevendouglas.me/categories/b-65668.xml</loc>
+  <lastmod>2025-10-26T05:44:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://stevendouglas.me/categories/bridge.xml</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://stevendouglas.me/categories/cat_machining-lathe.xml</loc>
+  <lastmod>2025-10-26T05:44:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/cat_posts.xml</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/drac.xml</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/freebsd.xml</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/hax.xml</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/jails.xml</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://stevendouglas.me/categories/lathe.xml</loc>
+  <lastmod>2025-10-26T05:44:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/linux.xml</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/pf.xml</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/poudriere.xml</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/ssh.xml</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://stevendouglas.me/categories/utilathe-9-series-1000.xml</loc>
+  <lastmod>2025-10-26T05:44:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/vnet-vimage-iocage-freebsd-120-dhcp.xml</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/categories/wine.xml</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/rss.xml</loc>
-  <lastmod>2019-03-22T05:50:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/sitemap.xml</loc>
-  <lastmod>2019-03-22T06:32:00Z</lastmod>
+  <lastmod>2025-10-26T05:50:00Z</lastmod>
  </sitemap>
 </sitemapindex>
