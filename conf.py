@@ -26,7 +26,7 @@ SITE_URL = "https://stevendouglas.me/"
 # If not set, defaults to SITE_URL
 # BASE_URL = "https://stevendouglas.me/"
 BLOG_EMAIL = "me@stevendouglas.me"
-BLOG_DESCRIPTION = "bsd ramblings"  # (translatable)
+BLOG_DESCRIPTION = "musings"  # (translatable)
 
 # Nikola is multilingual!
 #
@@ -1364,7 +1364,7 @@ UNSLUGIFY_TITLES = True
 
 # Put in global_context things you want available on all your templates.
 # It can be anything, data, functions, modules, etc.
-GLOBAL_CONTEXT={}
+GLOBAL_CONTEXT = {}
 GLOBAL_CONTEXT['HACK_VARIANT'] = 'dark'
 
 # Add functions here and they will be called with template
