@@ -18,6 +18,10 @@
   <lastmod>2026-04-24T22:51:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://stevendouglas.me/categories/cat_posts.xml</loc>
+  <lastmod>2026-04-24T22:54:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://stevendouglas.me/categories/drac.xml</loc>
   <lastmod>2026-04-24T22:51:00Z</lastmod>
  </sitemap>
@@ -71,6 +75,6 @@
  </sitemap>
  <sitemap>
   <loc>https://stevendouglas.me/sitemap.xml</loc>
-  <lastmod>2026-04-24T22:51:00Z</lastmod>
+  <lastmod>2026-04-24T22:54:00Z</lastmod>
  </sitemap>
 </sitemapindex>

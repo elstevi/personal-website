@@ -27,11 +27,11 @@
  </url>
  <url>
   <loc>https://stevendouglas.me/archive.html</loc>
-  <lastmod>2026-04-24T22:50:00Z</lastmod>
+  <lastmod>2026-04-24T22:54:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/categories/</loc>
-  <lastmod>2026-04-24T22:51:00Z</lastmod>
+  <lastmod>2026-04-24T22:54:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/categories/b-65668/</loc>
@@ -44,6 +44,10 @@
  <url>
   <loc>https://stevendouglas.me/categories/cat_lathe/</loc>
   <lastmod>2026-04-24T22:51:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://stevendouglas.me/categories/cat_posts/</loc>
+  <lastmod>2026-04-24T22:54:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/categories/drac/</loc>
@@ -95,7 +99,7 @@
  </url>
  <url>
   <loc>https://stevendouglas.me/index-1.html</loc>
-  <lastmod>2026-04-24T22:51:00Z</lastmod>
+  <lastmod>2026-04-24T22:54:00Z</lastmod>
  </url>
  <url>
   <loc>https://stevendouglas.me/posts/backup-wordpress-website-offsite-with-tarsnap/</loc>
