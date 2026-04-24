@@ -328,7 +328,7 @@ WRITE_TAG_CLOUD = True
 
 # Generate pages for each section. The site must have at least two sections
 # for this option to take effect. It wouldn't build for just one section.
-POSTS_CATEGORIES = True
+POSTS_SECTIONS = True
 
 # Setting this to False generates a list page instead of an index. Indexes
 # are the default and will apply GENERATE_ATOM if set.
@@ -980,20 +980,12 @@ RSS_COPYRIGHT_FORMATS = CONTENT_FOOTER_FORMATS
 # systems.  The following comment systems are supported by Nikola:
 #   disqus, facebook, googleplus, intensedebate, isso, livefyre, muut
 # You can leave this option blank to disable comments.
-COMMENT_SYSTEM = "cactus"
+COMMENT_SYSTEM = ""
 # And you also need to add your COMMENT_SYSTEM_ID which
 # depends on what comment system you use. The default is
 # "nikolademo" which is a test account for Disqus. More information
 # is in the manual.
-COMMENT_SYSTEM_ID = "dereference"
-
-GLOBAL_CONTEXT = {
-    "cactus_config": {
-        "defaultHomeserverUrl": "https://matrix.cactus.chat:8448",
-        "serverName": "cactus.chat"
-    }
-}
-
+COMMENT_SYSTEM_ID = ""
 
 # Enable annotations using annotateit.org?
 # If set to False, you can still enable them for individual posts and pages
@@ -1291,7 +1283,7 @@ EXTRA_HEAD_DATA = """<style>
 
 # If you hate "Filenames with Capital Letters and Spaces.md", you should
 # set this to true.
-FILE_METADATA_UNSLUGIFY_TITLES = True
+UNSLUGIFY_TITLES = True
 
 # Additional metadata that is added to a post when creating a new_post
 # ADDITIONAL_METADATA = {}
