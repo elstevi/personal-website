@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html prefix="" lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Creating a FreeBSD VPN Router with PF and Wireguard | dereference</title>
+<link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/dark.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
+<link href="../../assets/css/custom.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<link rel="canonical" href="https://stevendouglas.me/posts/creating-a-freebsd-vpn-router-with-pf-and-wireguard/">
+<link rel="icon" href="../../favicon.png" sizes="128x128">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><style>
+/* Force comments inside Nikola/Pygments blocks to behave */
+.highlight .c,
+.highlight .cm,
+.highlight .c1 {
+    font-size: 14px !important; /* Adjust to your preferred size */
+    font-weight: normal !important;
+    line-height: normal !important;
+    display: inline !important; /* Prevents it from jumping to a new line if .c is a block element elsewhere */
+}
+</style>
+<meta name="author" content="Steven Douglas">
+<link rel="prev" href="../cross-slide-nut/" title="Cross Slide Nut" type="text/html">
+<meta property="og:site_name" content="dereference">
+<meta property="og:title" content="Creating a FreeBSD VPN Router with PF and Wireguard">
+<meta property="og:url" content="https://stevendouglas.me/posts/creating-a-freebsd-vpn-router-with-pf-and-wireguard/">
+<meta property="og:description" content="Introduction
+It is occasionally useful to forward all traffic from a particular subnet over a vpn for privacy.
+Assumptions
+I am assuming that you already have FreeBSD installed, and a working Wireguar">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-04-22T21:47:19-07:00">
+<meta property="article:tag" content="freebsd">
+</head>
+<body class="hack dark">
+
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    <div id="container">
+         
+    <header id="header"><h1 id="brand"><a href="../../" title="dereference" rel="home">
+
+        <span id="blog-title">dereference</span>
+    </a></h1>
+
+        
+
+        
+    <nav id="menu"><ul>
+<li><a href="../../archive.html">Posts by date</a></li>
+                <li><a href="../../resume-latest-public.pdf">Resume</a></li>
+                <li><a href="../../rss.xml">RSS feed</a></li>
+                <li><a href="../../categories/">Tags</a></li>
+                <li><a href="https://github.com/elstevi/"><img class="socialmedia" width="25px" src="../../github.png"></a></li>
+                <li><a href="https://www.linkedin.com/in/steven-douglas-b301a4137"><img class="socialmedia" width="30px" src="../../linkedin.png"></a></li>
+                <li><a href="https://twitter.com/elstevi"><img class="socialmedia" width="25px" src="../../twitter.png"></a></li>
+
+    
+
+    
+    
+    </ul></nav></header><main id="content"><article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Creating a FreeBSD VPN Router with PF and Wireguard</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
+                    Steven Douglas
+            </span></p>
+            <p class="dateline">
+            <a href="." rel="bookmark">
+            <time class="published dt-published" datetime="2026-04-22T21:47:19-07:00" itemprop="datePublished" title="2026-04-22 21:47">2026-04-22 21:47</time></a>
+            </p>
+            
+        <p class="sourceline"><a href="index.md" class="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <h3>Introduction</h3>
+<p>It is occasionally useful to forward all traffic from a particular subnet over a vpn for privacy.</p>
+<h3>Assumptions</h3>
+<p>I am assuming that you already have FreeBSD installed, and a working Wireguard configuration that you might have got from a VPN provider, or perhaps crafted yourself. The idea is that all traffic behind the FreeBSD VPN Router will be "protected" by the vpn traffic. Therefore, we will run DHCP on this subnet.</p>
+<!-- TEASER_END -->
+
+<h3>Install packages</h3>
+<div class="code"><pre class="code literal-block">pkg<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>wireguard-tools<span class="w"> </span>dnsmasq
+</pre></div>
+
+<h3>Configure Wireguard</h3>
+<p>Create the file <code>/usr/local/etc/wireguard/wg0.conf</code> with your VPN configuration. Here is mine:</p>
+<div class="code"><pre class="code literal-block"><span class="k">[Interface]</span>
+<span class="na">PrivateKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">redacted</span>
+<span class="na">Address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">redacted</span>
+
+<span class="c1"># Important so wireguard doesnt add routes automatically</span>
+<span class="na">Table</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">off</span>
+
+<span class="k">[Peer]</span>
+<span class="na">PublicKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">redacted</span>
+<span class="na">AllowedIPs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">0.0.0.0/0</span>
+<span class="na">Endpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">redacted:51820</span>
+<span class="na">PersistentKeepalive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">25</span>
+</pre></div>
+
+<h3>Configure PF</h3>
+<p>Create the following <code>/etc/pf.conf</code>...adapt to your use case:</p>
+<div class="code"><pre class="code literal-block"><span class="na">ext_if</span><span class="o">=</span><span class="s">"vtnet0"</span><span class="w">                                                      </span><span class="c1"># Connection to internet</span>
+<span class="na">int_if</span><span class="o">=</span><span class="s">"vtnet1"</span><span class="w">                                                      </span><span class="c1"># VPN Protected interface</span>
+<span class="na">vpn_if</span><span class="o">=</span><span class="s">"wg0"</span><span class="w">                                                         </span><span class="c1"># VPN interface</span>
+<span class="na">local_subnets</span><span class="o">=</span><span class="s">"172.16.30.0/24"</span><span class="w">                                       </span><span class="c1"># VPN Protected interface subnet</span>
+
+<span class="na">scrub in</span>
+
+<span class="na">nat on $vpn_if from $int_if</span><span class="o">:</span><span class="s">network to !$int_if:network -&gt; ($vpn_if)</span><span class="w"> </span><span class="c1"># Nat all traffic from $int_if:network to $vpn_if</span>
+
+<span class="na">block log all                                                        # Block the rest</span>
+<span class="na">pass on lo0                                                          # Skip the loopback</span>
+<span class="na">pass out keep state                                                  # Pass traffic out of this router</span>
+<span class="na">pass proto icmp                                                      # Pass ICMP</span>
+<span class="na">pass in on $int_if route-to $vpn_if from $int_if</span><span class="o">:</span><span class="s">network keep state</span><span class="w">  </span><span class="c1"># Pass traffic to VPN</span>
+<span class="na">pass inet proto udp from any to any port 67</span><span class="o">:</span><span class="s">68</span><span class="w">                       </span><span class="c1"># Allow DHCP</span>
+<span class="na">pass in on $ext_if proto tcp from $ext_if</span><span class="o">:</span><span class="s">network to self port ssh</span><span class="w">   </span><span class="c1"># Allow SSH from $ext_if</span>
+</pre></div>
+
+<h3>Configure Dnsmasq</h3>
+<p>I'm using Dnsmasq for dhcp only, so here is my <code>/usr/local/etc/dnsmasq.conf</code>:</p>
+<div class="code"><pre class="code literal-block"><span class="c1"># Disable dns functionality</span>
+<span class="na">port</span><span class="o">=</span><span class="s">0</span>
+
+<span class="c1"># Only bind on vtnet1 (VPN Protected interface)</span>
+<span class="na">interface</span><span class="o">=</span><span class="s">vtnet1</span>
+
+<span class="c1"># DHCP Range for your VPN Protected interface</span>
+<span class="na">dhcp-range</span><span class="o">=</span><span class="s">set:mag,172.16.30.100,172.16.30.200,255.255.255.0,2h</span>
+
+<span class="c1"># Replace with your preferred dns server for the protected subnet!</span>
+<span class="na">dhcp-option</span><span class="o">=</span><span class="s">6,8.8.8.8</span><span class="w"> </span>
+</pre></div>
+
+<h3>Configure rc.conf services and networking</h3>
+<p>Here is what my <code>/etc/rc.conf</code> looks like:</p>
+<div class="code"><pre class="code literal-block"><span class="nv">hostname</span><span class="o">=</span><span class="s2">"freebsdvpnrouter"</span>
+
+<span class="c1"># Unprotected "WAN" interface. Could be just your normal network.</span>
+<span class="nv">ifconfig_vtnet0</span><span class="o">=</span><span class="s2">"DHCP"</span>
+
+<span class="c1"># Protected interface. Make up any subnet you want. This is mine.</span>
+<span class="nv">ifconfig_vtnet1</span><span class="o">=</span><span class="s2">"inet 172.16.30.1/24"</span>
+
+<span class="c1"># Services</span>
+<span class="nv">dnsmasq_enable</span><span class="o">=</span><span class="s2">"YES"</span>
+<span class="nv">gateway_enable</span><span class="o">=</span><span class="s2">"YES"</span><span class="w"> </span><span class="c1"># Required for routing functionality!!</span>
+<span class="nv">pf_enable</span><span class="o">=</span><span class="s2">"YES"</span>
+<span class="nv">sshd_enable</span><span class="o">=</span><span class="s2">"YES"</span>
+<span class="nv">wireguard_enable</span><span class="o">=</span><span class="s2">"YES"</span>
+<span class="nv">wireguard_interfaces</span><span class="o">=</span><span class="s2">"wg0"</span>
+</pre></div>
+
+<h3>Bringing it all together</h3>
+<p>You should <code>reboot</code> to bring all services up after updating <code>/etc/rc.conf</code>. After that, you can connect a host (virtual or otherwise) to your protected vpn interface. It should get an ip on your new subnet. Make sure that the public ip seen on the VPN Protected Interface is different that your public one. My favorite way is curl:</p>
+<div class="code"><pre class="code literal-block">curl<span class="w"> </span>http://ifconfig.me
+</pre></div>
+
+<p>This also validates DNS is working. You could also use a browser.</p>
+<h3>Troubleshooting</h3>
+<h4>Verify the VPN is connected</h4>
+<p>Use the wg command to validate. Here is mine in the working state:</p>
+<div class="code"><pre class="code literal-block">root@freebsdvpnrouter--&gt;<span class="w"> </span>wg
+interface:<span class="w"> </span>wg0
+<span class="w">  </span>public<span class="w"> </span>key:<span class="w"> </span>redacted
+<span class="w">  </span>private<span class="w"> </span>key:<span class="w"> </span><span class="o">(</span>hidden<span class="o">)</span>
+<span class="w">  </span>listening<span class="w"> </span>port:<span class="w"> </span><span class="m">47619</span>
+
+peer:<span class="w"> </span>redacted
+<span class="w">  </span>endpoint:<span class="w"> </span>redacted:51820
+<span class="w">  </span>allowed<span class="w"> </span>ips:<span class="w"> </span><span class="m">0</span>.0.0.0/0
+<span class="w">  </span>latest<span class="w"> </span>handshake:<span class="w"> </span><span class="m">2</span><span class="w"> </span>minutes<span class="w"> </span>ago
+<span class="w">  </span>transfer:<span class="w"> </span><span class="m">188</span>.32<span class="w"> </span>MiB<span class="w"> </span>received,<span class="w"> </span><span class="m">6</span>.61<span class="w"> </span>MiB<span class="w"> </span>sent
+<span class="w">  </span>persistent<span class="w"> </span>keepalive:<span class="w"> </span>every<span class="w"> </span><span class="m">25</span><span class="w"> </span>seconds
+</pre></div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/freebsd/" rel="tag">freebsd</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../cross-slide-nut/" rel="prev" title="Cross Slide Nut">Previous post</a>
+            </li>
+        </ul></nav></aside></article></main><footer id="footer"><p>©2026 Steven Douglas</p>
+            
+        </footer>
+</div>
+    
+    
+
+    
+    
+    
+</body>
+</html>

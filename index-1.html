@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html prefix="" lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="musings">
+<meta name="viewport" content="width=device-width">
+<title>dereference (page 1) | dereference</title>
+<link href="assets/css/rst.css" rel="stylesheet" type="text/css">
+<link href="assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="assets/css/dark.css" rel="stylesheet" type="text/css">
+<link href="assets/css/theme.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
+<link href="assets/css/custom.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
+<link rel="canonical" href="https://stevendouglas.me/index-1.html">
+<link rel="icon" href="favicon.png" sizes="128x128">
+<link rel="prev" href="." type="text/html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><style>
+/* Force comments inside Nikola/Pygments blocks to behave */
+.highlight .c,
+.highlight .cm,
+.highlight .c1 {
+    font-size: 14px !important; /* Adjust to your preferred size */
+    font-weight: normal !important;
+    line-height: normal !important;
+    display: inline !important; /* Prevents it from jumping to a new line if .c is a block element elsewhere */
+}
+</style>
+</head>
+<body class="hack dark">
+
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    <div id="container">
+         
+    <header id="header"><h1 id="brand"><a href="." title="dereference" rel="home">
+
+        <span id="blog-title">dereference</span>
+    </a></h1>
+
+        
+
+        
+    <nav id="menu"><ul>
+<li><a href="archive.html">Posts by date</a></li>
+                <li><a href="resume-latest-public.pdf">Resume</a></li>
+                <li><a href="rss.xml">RSS feed</a></li>
+                <li><a href="categories/">Tags</a></li>
+                <li><a href="https://github.com/elstevi/"><img class="socialmedia" width="25px" src="github.png"></a></li>
+                <li><a href="https://www.linkedin.com/in/steven-douglas-b301a4137"><img class="socialmedia" width="30px" src="linkedin.png"></a></li>
+                <li><a href="https://twitter.com/elstevi"><img class="socialmedia" width="25px" src="twitter.png"></a></li>
+
+    
+
+    
+    
+    </ul></nav></header><main id="content"><div class="postindex">
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/freebsd-replace-a-root-disk-from-bsdinstall-connected-to-a-raid-controller/" class="u-url">FreeBSD replace a root disk from bsdinstall connected to a RAID controller</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                Steven Douglas
+            </span></p>
+            <p class="dateline">
+            <a href="posts/freebsd-replace-a-root-disk-from-bsdinstall-connected-to-a-raid-controller/" rel="bookmark">
+            <time class="published dt-published" datetime="2018-03-27T22:51:26-07:00" itemprop="datePublished" title="2018-03-27 22:51">2018-03-27 22:51</time></a>
+            </p>
+        </div>
+    </header><div class="p-summary entry-summary">
+    <div>
+<p>I have a failed drive in my pool!</p>
+<div class="code"><pre class="code literal-block">#<span class="w"> </span><span class="nv">mfiutil</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="nv">drives</span>
+<span class="nv">mfi0</span><span class="w"> </span><span class="nv">Physical</span><span class="w"> </span><span class="nv">Drives</span>:
+<span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="ss">(</span><span class="w">  </span><span class="mi">137</span><span class="nv">G</span><span class="ss">)</span><span class="w"> </span><span class="nv">FAILED</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">FUJITSU</span><span class="w"> </span><span class="nv">MBE2147RC</span><span class="w"> </span><span class="nv">D905</span><span class="w"> </span><span class="nv">serial</span><span class="o">=</span><span class="nv">D304PB40ASPD</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">SAS</span><span class="w"> </span><span class="nv">E1</span>:<span class="nv">S0</span>
+<span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="ss">(</span><span class="w">  </span><span class="mi">932</span><span class="nv">G</span><span class="ss">)</span><span class="w"> </span><span class="nv">ONLINE</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">MM1000GBKAL</span><span class="w"> </span><span class="nv">HPGB</span><span class="w"> </span><span class="nv">serial</span><span class="o">=</span><span class="mi">9</span><span class="nv">XG259SP</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">SATA</span><span class="w"> </span><span class="nv">E1</span>:<span class="nv">S1</span>
+</pre></div>
+
+<p class="more"><a href="posts/freebsd-replace-a-root-disk-from-bsdinstall-connected-to-a-raid-controller/">Read more…</a></p>
+</div>
+    </div>
+    </article>
+</div>
+
+        <nav class="postindexpager"><ul class="pager">
+<li class="previous">
+                <a href="." rel="prev">Newer posts</a>
+            </li>
+        </ul></nav></main><footer id="footer"><p>©2026 Steven Douglas</p>
+            
+        </footer>
+</div>
+    
+    
+
+    
+    
+    
+</body>
+</html>
