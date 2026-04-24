@@ -892,7 +892,7 @@ INDEXES_PAGES_MAIN = True
 # paraiso-light, pastie, perldoc, rrt, tango, trac, vim, vs, xcode
 # This list MAY be incomplete since pygments adds styles every now and then.
 # Check with list(pygments.styles.get_all_styles()) in an interpreter.
-CODE_COLOR_SCHEME = 'vim'
+CODE_COLOR_SCHEME = 'monokai'
 
 # FAVICONS contains (name, file, size) tuples.
 # Used to create favicon link like this:
@@ -1231,7 +1231,18 @@ MARKDOWN_EXTENSIONS = ['markdown.extensions.fenced_code', 'markdown.extensions.c
 # Extra things you want in the pages HEAD tag. This will be added right
 # before </head>
 # (translatable)
-# EXTRA_HEAD_DATA = ""
+EXTRA_HEAD_DATA = """<style>
+/* Force comments inside Nikola/Pygments blocks to behave */
+.highlight .c,
+.highlight .cm,
+.highlight .c1 {
+    font-size: 14px !important; /* Adjust to your preferred size */
+    font-weight: normal !important;
+    line-height: normal !important;
+    display: inline !important; /* Prevents it from jumping to a new line if .c is a block element elsewhere */
+}
+</style>
+"""
 # Google Analytics or whatever else you use. Added to the bottom of <body>
 # in the default template (base.tmpl).
 # (translatable)

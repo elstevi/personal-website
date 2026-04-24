@@ -15,7 +15,6 @@
 	word-wrap: break-word;                 /* IE 5.5+ and up */
 	padding: 10px;
 	background-color: black;
-	color: #33FF33;
 	/* overflow-x: auto; */                /* Firefox 2 only */
 	/* width: 99%; */		       /* only if needed */
 	}
@@ -24,7 +23,6 @@
 	border-radius: 2px;
 	padding: 1px;
 	background-color: black;
-	color: #33FF33;
 	}
 .socialmedia {
 	vertical-align: middle;
